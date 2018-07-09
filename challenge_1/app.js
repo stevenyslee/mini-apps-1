@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			checkDiagonals();
 			if (winner) {
 				document.getElementById('winner').innerHTML = 'The winner is : ' + winner;			
+			} else if(!winner && moveCounter === 9) {
+				document.getElementById('winner').innerHTML = 'Draw!';			
 			}
 		}
 	};
@@ -58,7 +60,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	// Restart Game
 	var restartGame = function() {
-		
+		var squares = [].slice.call(document.getElementsByClassName('square'));
+		squares.forEach(function (element) {
+	  	element.innerHTML = '';
+		});
+		document.getElementById('winner').innerHTML = '';
+		winner = '';
+		moveCounter = 0;
 	}
 
 	// Add event listen to all squares
