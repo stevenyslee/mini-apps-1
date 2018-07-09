@@ -1,23 +1,37 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
 	var moveCounter = 0;
 	var winner;
+	var xTurn = true;
 
 
 	// Select square on board
 	var makeMove = function(){
+
 		if(!this.innerHTML && !winner) {
-			if (moveCounter % 2 === 0) {
+			console.log(xTurn);
+			if (xTurn) {
 				this.innerHTML = 'X';
+				xTurn = !xTurn;
 				moveCounter++;
 			} else {
 				this.innerHTML = 'O';
+				xTurn = !xTurn;
 				moveCounter++;
 			}
+
 			checkVerticals();
 			checkHorizontals();
 			checkDiagonals();
+
 			if (winner) {
-				document.getElementById('winner').innerHTML = 'The winner is : ' + winner;			
+				document.getElementById('winner').innerHTML = 'The winner is : ' + winner;
+				if (winner === 'X') {
+					var score = Number(document.getElementById('xScore').innerHTML);
+					document.getElementById('xScore').innerHTML = ++score;
+				}	else {
+					var score = Number(document.getElementById('oScore').innerHTML);
+					document.getElementById('oScore').innerHTML = ++score;
+				}		
 			} else if(!winner && moveCounter === 9) {
 				document.getElementById('winner').innerHTML = 'Draw!';			
 			}
@@ -65,8 +79,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	  	element.innerHTML = '';
 		});
 		document.getElementById('winner').innerHTML = '';
+		if (winner === 'X') {
+			xTurn = false;
+		} else {
+			xTurn = true;
+			console.log(xTurn);
+		}
+		moveCounter = 0
 		winner = '';
-		moveCounter = 0;
 	}
 
 	// Add event listen to all squares
