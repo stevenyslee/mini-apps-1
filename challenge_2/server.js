@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyparser = require('body-parser');
 const path = require('path');
+let globalCounter = 1;
 
 
 app.use(function(req, res, next) {
@@ -27,12 +28,13 @@ app.post('/', (req, res) => {
   
   let keys = Object.keys(req.body);
   keys.splice(keys.indexOf('children'), 1);
+  keys.unshift('Counter');
   let people = [];
   people.push(keys);
 
   var getNestedData = function(obj) {
-    let person = [];
-    for (let i = 0; i < keys.length; i++) {
+    let person = [globalCounter++];
+    for (let i = 1; i < keys.length; i++) {
       person.push(obj[keys[i]]);
     }
     people.push(person);
