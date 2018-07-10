@@ -11,12 +11,15 @@ app.use(function(req, res, next) {
   next();
 });
 
+
 app.listen(3000, () => console.log('Web server listening on localhost:3000'));
 
 app.use(function(req, res, next) {
   console.log(req.method, req.path);
   next();
 });
+
+app.use(express.static('public'))
 
 app.use(bodyparser.urlencoded({
   extended: true
