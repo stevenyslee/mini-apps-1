@@ -2,7 +2,7 @@ class User extends React.Component {
   render() {
     return (
       <div>
-        <form>
+        <form action="#">
           Name:<br></br>
           <input type="text" name="name"></input>
           <br></br>Email:<br></br>
@@ -10,7 +10,7 @@ class User extends React.Component {
           <br></br>Password:<br></br>
           <input type="text" name="password"></input>
           <br></br>
-          <input type="submit" value="Next"></input>
+          <input type="button" value="Next" onClick={this.props.onClick}></input>
           <br></br>
         </form>
       </div>
@@ -36,7 +36,7 @@ class Address extends React.Component {
           <br></br>Phone Number:<br></br>
           <input type="text" name="phone"></input>
           <br></br>
-          <input type="submit" value="Next"></input>
+          <input type="button" value="Next" onClick={this.props.onClick}></input>
           <br></br>
         </form>
       </div>
@@ -58,9 +58,19 @@ class Payment extends React.Component {
           <br></br>Billing Zip Code:<br></br>
           <input type="text" name="billing-zip"></input>
           <br></br>
-          <input type="submit" value="Submit"></input>
+          <input type="button" value="Complete Purchase" onClick={this.props.onClick}></input>
           <br></br>
         </form>
+      </div>
+    );
+  }
+}
+
+class Purchase extends React.Component {
+  render() {
+    return (
+      <div>
+        <div>Purchase Summary</div>
       </div>
     );
   }
@@ -72,25 +82,38 @@ class App extends React.Component {
     this.state = {
       form: 0
     }
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState({
+      form: ++this.state.form
+    });
   }
 
   render() {
     if (this.state.form === 0) {
       return (
         <div>
-          <User />
+          <User onClick={this.handleClick}/>
         </div>
       ); 
     } else if (this.state.form === 1) {
       return (
         <div>
-          <Address />
+          <Address onClick={this.handleClick}/>
         </div>
       ); 
     } else if (this.state.form === 2) {
       return (
         <div>
-          <Payment />
+          <Payment onClick={this.handleClick}/>
+        </div>
+      ); 
+    } else if (this.state.form === 3) {
+      return (
+        <div>
+          <Purchase onClick={this.handleClick}/>
         </div>
       ); 
     }
