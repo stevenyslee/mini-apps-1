@@ -1,3 +1,5 @@
+var obj = {};
+
 class User extends React.Component {
   render() {
     return (
@@ -71,6 +73,7 @@ class Purchase extends React.Component {
     return (
       <div>
         <div>Purchase Summary</div>
+        <div id='summary'></div>
       </div>
     );
   }
@@ -82,13 +85,37 @@ class App extends React.Component {
     this.state = {
       form: 0
     }
+    
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
+    $('[type="text"]').each(function() {
+      obj[$(this).attr("name")] = $(this).val();
+    });
     this.setState({
       form: ++this.state.form
     });
+    if (this.state.form === 3) {
+      var jqxhr = $.post( "http://127.0.0.1:8080/", obj, function(data) {
+        console.log(data);
+        $('#summary').append(`<div>Name: ${data['name']}</div>`);
+        $('#summary').append(`<div>Email: ${data['email']}</div>`);
+        $('#summary').append(`<div>Password: ${data['password']}</div>`);
+        $('#summary').append(`<div>Address Line 1: ${data['line_1']}</div>`);
+        $('#summary').append(`<div>Address Line 2: ${data['line_2']}</div>`);
+        $('#summary').append(`<div>City: ${data['city']}</div>`);
+        $('#summary').append(`<div>State: ${data['state']}</div>`);
+        $('#summary').append(`<div>Zip Code: ${data['zip']}</div>`);
+        $('#summary').append(`<div>Credit Card Number: ${data['credit_card']}</div>`);
+        $('#summary').append(`<div>Expiry Date: ${data['exp_date']}</div>`);
+        $('#summary').append(`<div>CVV: ${data['cvv']}</div>`);
+        $('#summary').append(`<div>Billing Zip Code: ${data['billing_zip']}</div>`);
+        })
+        .fail(function() {
+          console.log( "error" );
+        });
+    }
   }
 
   render() {

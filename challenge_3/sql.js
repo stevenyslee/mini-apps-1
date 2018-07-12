@@ -11,7 +11,7 @@
 //   phone varchar(60),
 //   credit_card varchar(30),
 //   exp_date varchar(60),
-//   cvv int(10),
+//   cvv varchar(60),
 //   billing_zip varchar(15),
 //   PRIMARY KEY (id)
 // );
